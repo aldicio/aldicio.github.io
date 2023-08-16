@@ -1,0 +1,65 @@
+
+.texto-principal {/* Coluna onde fica o texto principal (coluna 2 , pois na coluna 1 fica o sidebar*/
+    margin-left: 300px;
+    width: 850px;
+    padding: 40px;
+    text-align:left;
+}
+
+body {
+    color: whitesmoke;
+    background-color: rgb(40, 45, 50);
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+}
+
+a {
+    color: white;
+}
+
+nav.menu-lateral{
+    width: 240px;
+    height: 100%;
+    background-color: #202020;
+    padding: 40px 0 40px 1%;
+    box-shadow: 3px 0 0 gray;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.btn-expandir{
+    width: 100%;
+    padding-left: 10px;
+}
+
+
+ul{
+    height: 100%;
+    list-style-type: none;
+}
+
+ul li.item-menu{
+    transition: .2s;
+}
+
+ul li.item-menu:hover{
+    background: gray;
+}
+
+ul li.item-menu a{
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    padding: 20px 4%;
+    display: flex;
+    line-height: 30px;
+}
+
+ul li.item-menu a .txt-link{
+    margin-left: 15px;
+}
+
+ul li.item-menu a .icon >i{
+    font-size: 25px;
+}
