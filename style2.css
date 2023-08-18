@@ -1,0 +1,19 @@
+    body {
+    color: rgb(214, 213, 171);
+    background-color: rgb(40, 45, 50);
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+}
+
+a {
+    color:rgb(99, 214, 214);
+}
+
+
+ol li.item-algoritmo{
+    line-height: 0.7cm; 
+    
+}
+
+ol li.item-algoritmo .autores{
+    color: whitesmoke;
+}
