@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Aprendendo Canvas HTML e pyScript para WEB</title>
+
+
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.21.3/full/pyodide.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- INICIO SCRIPT LATEX -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript">MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$','$'],['[m]','[/m]']], displayMath: [['[mm]','[/mm]'],['$$','$$']]},
+        "HTML-CSS": { scale: 100, showMathMenu: false, minScaleAdjust: 100}
+        });
+    </script>
+    <!-- FIM SCRIPT LATEX -->
+
+
+</head>
+
+<body>
+
+<py-config>
+    packages = ["matplotlib", "sympy","numpy"]
+</py-config>
+
+<!--<button onclick="NovaCelulaLimites()" type="button" class="btn btn-primary">Nova célula</button>-->
+
+<h1> Cálculo diferencial e integral com o Sympy e Python</h1>
+<strong>Prof. Aldicio</strong>
+<h4>
+Com base nos exemplos resolvidos e a linguagem Python, usem os campos abaixo para resolver exercícios sobre,<br>limites, derivada e integral.
+SymPy é uma biblioteca escrita em Python para matemática simbólica e seu objetivo <br> é tornar-se um sistema de álgebra computacional cheio de recursos.<br>
+Veja documentação completa do Sympy em <a href="https://www.sympy.org/en/index.html">https://www.sympy.org/</a>
+</h4>
+
+<h3 style="background-color:rgb(0, 140, 130);">__________LIMITES</h3>
+
+<py-repl>
+    from sympy import *
+    from sympy import limit
+    x=symbols('x')
+    f = sin(x)/x
+    g = 1/(x-1)
+    limit(f,x,0)
+    limit(g,x,1,'-')
+    limit(g,x,1,'+')
+    limit(g,x,oo)
+    limit(g,x,-oo)
+</py-repl>
+<br>Significado dos comandos acima:<br>
+ <strong>from sympy import * </strong>: biblioteca para fazer cálculos. <strong>x=symbols('x'):</strong> transforma x em uma variável simbólica <br>
+<strong> f=sin(x)/x:</strong> f é a função $\dfrac{sen(x)}{x}$. <strong>limit(f,x,a):</strong> calcula o limite de $f$ em relação a $x$ no ponto $x=a$, ou seja, $\displaystyle \lim_{x\to a}f(x)$.<br>
+<strong>limit(g,x,1,'-'):</strong> calcula o limite lateral à esquerda em relação a x no ponto x=1, ou seja, $\displaystyle \lim_{x\to 1^{-}}g(x)$.<br>
+<strong>limit(g,x,1,'+'):</strong> calcula o limite lateral à direira em relação a x no ponto x=1.<br>
+<strong>limit(g,x,oo):</strong> calcula o limite quando x tende para mais infinito, ou seja, $\displaystyle \lim_{x\to \infty}g(x)$.<br>
+<strong>limit(g,x,-oo):</strong> calcula o limite quando x tende para menos infinito.<br>
+Click em qualquer lugar da célula acima, e tecle <strong>SHIFT+ENTER</strong> para executar os comandos. O resultado retornado será o da última linha.<br>
+Copie ou modifique o conteúdo da célula acima para novos exemplos. Tecle <strong>ENTER</strong> para mudar de linha (ENTER não executa o comando).
+
+
+<py-repl>
+    from sympy import *
+</py-repl>
+
+<py-repl>
+    from sympy import *
+</py-repl>
+
+<py-repl>
+    from sympy import *
+</py-repl>
+
+
+<h3 style="background-color:rgb(0, 140, 130);">    __________DERIVADA</h3>
+<py-repl>
+    from sympy import *
+    x=symbols('x')
+    f = x**3+5*x**2
+    diff(f,x)
+</py-repl>
+<br>Significado dos comandos acima:<br>
+  <strong> f=x**3+5*x**2:</strong> f é a função $x^3+5x^2$. <strong>diff(f,x):</strong> calcula a derivada de $f$ em relação a variável $x$.<br>
+<py-repl>
+    from sympy import *
+</py-repl>
+
+<py-repl>
+    from sympy import *
+</py-repl>
+
+
+<py-repl>
+    from sympy import *
+</py-repl>
+
+<h3 style="background-color:rgb(0, 140, 130);">    __________ALGUNS COMANDOS ÚTEIS</h3>
+
+<py-repl>
+    from sympy import *
+    x = Symbol('x')
+    solve(x**2 - 1, x)
+</py-repl>
+<br>O comando "solve" é usado para resolver equação algébrica.<br>
+
+<py-repl>
+    from sympy import *
+</py-repl>
+
+<py-repl>
+    from sympy import *
+    x,y = symbols('x y')
+    expand((x+y)**3)
+</py-repl>
+<br>O comando "expand" expande uma expressão.<br>
+
+<py-repl>
+    from sympy import *
+</py-repl>
+
+<py-repl>
+    from sympy import *
+    x,y = symbols('x y')
+    simplify((x**3 + 3*x**2*y + 3*x*y**2 + y**3)/(x+y))
+</py-repl>
+<br>O comando "simplify" simplifica uma expressão.<br>
+
+<py-repl>
+    from sympy import *
+</py-repl>
+
+<py-repl>
+    from sympy import *
+    x,y = symbols('x y')
+    factor(x**3 + 3*x**2*y + 3*x*y**2 + y**3)
+</py-repl>
+<br>O comando "factor" fatora uma expressão.<br>
+
+<py-repl>
+    from sympy import *
+</py-repl>
+
+
+<py-repl>
+    from sympy import *
+    x = Symbol('x')
+    f = x**2
+    f.subs(x,4)
+</py-repl>
+<br>O comando "subs" substitui uma variável por outra variável ou por um número. <br>
+
+<py-repl>
+    from sympy import *
+</py-repl>
+
+
+<h3 style="background-color:rgb(0, 140, 130);">    __________Gráfico</h3>
+
+<py-repl output="plot">
+    import matplotlib.pyplot as plt
+    import numpy as np
+
+    x = np.linspace(-10, 10, 20)
+    y = x**2-1
+    fig, ax = plt.subplots()
+    plt.plot(x, y , color='red')
+    fig
+</py-repl>
+
+<br>O bloco acima esboça o gráfico de uma função. No caso a função $y=x^2-1$, no intervalo $[-10,10]$.
+<br>Mais sobre "matplotlib" em <a href="https://matplotlib.org/stable/index.html">https://matplotlib.org/</a>
+<br><br>
+
+<div id="plot"></div>
+
+
+
+</body>
+
+</html>
