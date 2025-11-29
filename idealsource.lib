@@ -1,0 +1,187 @@
+version="$Id: idealsourcelib 2018-01-23";
+category="Theory of singularities";
+info="
+LIBRARY:  idealsource.lib          Compute source ideals of corank 1 maps from C^n to C^n
+AUTHORS:  Aldicio Jose Miranda,    aldicio@ufu.br,
+
+PROCEDURES:
+  ideals();                          Compute source ideals of corank 1 maps from C^n to C^n
+ 
+";
+
+//-------------------------------------------------------------------------------------------------
+proc idealsource(ideal f, ideal P) // P= partition of n <= dimension of source ring
+{
+option(noredefine);
+ int     tTotal=timer;  int tbegin=timer;                   
+ string  RSName=nameof(basering);               // name of source ring
+ string varRSName=varstr(basering);
+ string varParam=parstr(basering);
+ ideal  If=ideal(f);                            //ideal that define f
+ int sP=size(P);                                //size of partition P
+ int sf=size(f);                                //dim. of source and target
+ poly Dim; Dim=0;
+
+ for(int i=1; i<=sP;i++)
+   {
+     Dim=Dim+P[i];
+     if (Dim > sf)
+       {
+         ERROR("Use partition for integer <= "+string(sf));
+       }
+   }
+ 
+ for(int i=1; i<= (sP-1); i++)
+   {
+     if(P[i+1] < P[i])
+      {
+       ERROR("Use an increasing partition!");
+      }
+    } 
+ execute("setring "+RSName); //go to source ring
+
+ print("//f:(C^"+string(sf)+",0)--->(C^"+string(sf)+",0) ; Partition = ["+ string(P)+"]");
+
+ string s;   list T;  list L;
+ int    dimF=nvars(basering);		      //dimF = dim.of source = number of vars in ring source
+ if(sf!=dimF)
+   {
+     ERROR("The dimensions of the source and target are different. Verify input!");
+   }
+ 
+ for(int j=1; j <=sP; j++)    //create z[i,j] variables
+   { 
+      for (int i=0;i <= P[j];i++)
+        {
+         s= string(z)+string(i)+string(j);
+          L[i+1]=s;
+	}
+      T[j]=L; 
+   }
+
+ if(varParam <>"")
+   {
+       string Nvars= "(0,"+varParam+"),("+string(T)+","+varRSName+"),dp";  //param. and variables (use global order)
+   }
+      else
+       {
+        string Nvars= "0,("+string(T)+","+varRSName+"),ds";  //variables; use local order ds in unfoldings (without parameters)
+       }
+   
+ poly Iz;Iz=0;
+ for(int j=1; j<=sf;j++)
+   {
+     Iz=Iz+var(j);             //poly x1+x2+...+(xn-1)+z
+   }
+ for (int i=1; i < sf;i++)
+   {
+     Iz= subst(Iz,If[i],0);  //obtain variable z in (x1,...,xn-1,z)
+   } 
+
+ //--------------------------------------------------------NEW RING-------------------------------------------
+ 
+ //execute("ring NewR=" +Nvars+ ",dp;");
+ execute("ring NewR=" +Nvars+";" );
+ execute("ideal If=imap("+RSName+",If)"); 
+ execute("ideal P=imap("+RSName+",P)");
+ execute("poly Iz=imap("+RSName+",Iz)");
+ string  NewRName=nameof(basering);
+ string varParam=parstr(basering);
+ string s1=string(P); 
+ execute("intvec Q = "+s1);                         //convert ideal P to string and convert string to intvec.
+ string s2; s2=string(z01);
+ poly g = If[size(If)]; poly m;  m=0;
+ int l=size(P); int sf=size(If);                     
+ list Var0;                                         //string with variables z0k.
+ ideal H;                                          //H = definition ideal of multiple points 
+
+ for (int i=1; i <= l;i++)
+   {
+     m=m+P[i];                          
+   }
+ 
+ string m1=string(m);  execute("int m2 = "+m1);
+
+ int n = m2+l;                                     //num. variables z[i,j] = order of Vandermonde matrix
+
+ matrix M[n][n];
+ for(int j=1; j <=n; j++)
+   { 
+     for (int i=1;i <= n;i++)
+        {
+	  M[j,i]=var(j)^(i-1);                    //vandermonde denomimator
+	}
+ 
+   }
+ poly detM=det(M);
+ matrix N[n][n];
+
+ int a;
+ 
+ for (int k=2; k<=n;k++)                      //starts with k=2, because M[i,1]=1, i=1,...,n.
+   {
+      N=M;
+      for(int i=1; i<=n;i++)
+        {
+          N[i,k]=(subst(g,Iz,var(i)));        //k-column of N is fixed   
+        }
+
+        poly detN=det(N); 
+        poly g2= simplify(detN/detM,1);  
+	a=1;
+
+	   for (int t=1; t<=l; t++)         //l=size(P)
+             {
+	       if(k==2)
+                 {
+                   Var0[t]=var(a);  //initial vars to use in Tvars below
+	         }
+                    for(int j=1; j <=Q[t]; j++) 
+	              {
+                        g2 = subst(g2,var(a+j),var(a));     //subst z0k by zik
+                      }
+              	      a=a+(Q[t]+1);
+             }
+            H=H+g2;
+    }
+      
+ list L; 
+ for(int i=n+1; i<=(nvars(basering)-1); i++)  //last variables x,y,...
+   {
+     L[i]=var(i);
+   }    
+
+ if(varParam <>"")
+   {
+     string Tvars= "(0,"+varParam+"),("+string(Var0)+","+string(L)+"),dp"; //for ring of param. use global order
+    }
+     else
+       {
+         string Tvars= "0,("+string(Var0)+","+string(L)+"),ds"; //ring without param. use ds local order
+       }
+
+ execute("ring MR=" +Tvars+";");
+                      
+ execute("ideal H=imap("+NewRName+",H)");
+ print("");
+ H; 
+ exportto(Top,MR);
+ exportto(Top,H);
+ print("");
+ print("//TOTAL TIME = "+string(timer-tbegin)+" sec");
+ print("//To access the ideal H, type:  setring MR; H; ");
+}      
+
+
+//---------------- using idealsource procedure to obtain multiple point source ideal-------------------------
+
+//Example: f:C^3 ----> C^3, by f(x,y,z)=(x,y,z6+yz+xz2); n = 3; partition P=[3]
+//ideals([x,y,z6+yz+xz2],[3]);
+
+//output is:
+//H[1]=36*z01^5+y
+//H[2]=45*z01^4-x
+//H[3]=20*z01^3
+
+//TOTAL TIME = 0 sec
+//To access the ideal H, type:  setring MR; H; 
