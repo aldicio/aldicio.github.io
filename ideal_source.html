@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+p {
+    font-size: 20px;
+	text-align: justify;
+}
+ </style>
+<!-- INICIO SCRIPT LATEX -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/javascript">MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'],['[m]','[/m]']], displayMath: [['[mm]','[/mm]'],['$$','$$']]},
+  "HTML-CSS": { scale: 100, showMathMenu: false, minScaleAdjust: 100}
+});</script>
+<!-- FIM SCRIPT LATEX -->
+</head>
+<body>
+<p>	
+<strong>The stable types in the source of corank $1$ map germ in ${\mathcal O}(n,n)$</strong>
+<br/>
+<br/>
+<strong>Introduction</strong>
+<br/>
+<br/>
+The multiple point spaces of a map germ from $({\mathbb C}^n, 0)$ to $({\mathbb C}^p, 0)$  play an important role in
+the study of its geometry, as well as the topology of the discriminant of a stable perturbation.
+The description of zero-stable types in the source and in the target for corank $1$ map germs from $({\mathbb C}^n,0)$ to
+$({\mathbb C}^n,0)$, is shown by Marar, Montaldi, Ruas, [1]. And the generalization for this description for all $r$-stable types, with $0 \leq r \leq n-1$, is shown by Jorge-Pérez, Levcovitz, Saia, [2]. Below a Singular library to computing the definition ideal of these $r$-stable types of $f$.
+<br/>
+<br/>
+Let $f\in {\mathcal O}(n,n)$ be a finitely determined map germ of corank $1$. Choosing linearly adapted  coordinates,  we can write
+$f(x,z)=(x_1, \dots, x_{n-1},g(x,z))$, where $x =(x_1,  \dots, x_{n-1})  \in {\mathbb C}^{n-1}$, $z\in {\mathbb C}$ and
+$g: ({\mathbb C}^n,0) \to ({\mathbb C},0)$ is a polynomial.   For each partition  ${\mathcal P}=(r_1,\cdots,r_{\ell})$ of an integer
+$m\leq n$,  i.e, $r_1+\cdots +r_{\ell}=m$, we consider the subset $D^{\ell}(f,{\mathcal P})$ of
+${\mathbb C}^{n-1}\times {\mathbb C}^{\ell}$, with $\ell :={\rm length}({\mathcal P})$,  defined by
+
+$$D^{\ell}(f,{\mathcal P})\!=\!closure\!\left\{\begin{array}{l}
+\!(x,z_1,\cdots,z_{\ell})\!\in \!  {\mathbb C}^{n-1}\!\times\! {\mathbb C}^{\ell} \colon \end{array} \begin{array}{l}
+z_i\neq z_j,\\
+f(x,z_i)=f(x,z_j) \ {\rm and}\\
+f\,\, \mbox{
+has a singularity of type}\\
+A_{r_j} \ \mbox{at} \  (x,z_j)
+\end{array}\right\}$$
+where `closure' means the analytic closure in ${\mathbb C}^{n-1}\times {\mathbb C}^{\ell}$.
+<br/>
+<br/>
+We remark that when $m=n$, the subsets $D^n(f,{\mathcal P})$ are called zero-schemes and are related to the  $0$-stable types
+<br/>
+<br/>
+<strong>Example:</strong>
+a) For the partition ${\mathcal P}=(1,\cdots,1)$ of $m$ with  $1+\cdots+1=m=\ell$, we have $D^{\ell}(f,{\mathcal P})=D^{\ell}(f)$, where
+$D^{\ell}(f)$ denotes the set of ordinary $\ell$-multiple points of $f$.
+<br/>
+<br/>
+b) For the partition ${\mathcal P}=(r_i)$, then $r_i=m$, $\ell =1$, and  $D^{1}(f,{\mathcal P})=\Sigma^{1,\cdots,1}(f),$
+where $\Sigma^{1,\cdots,1}(f)$ is the set of singularities of type  $\Sigma^{1, \ldots ,1}$ of $f$ with $ 1,\cdots,1$ repeated ${r_i}$-times,
+i.e, $f$ has a singularity of type  $A_{r_i}$.
+<br/>
+<br/>
+c) For the partition  ${\mathcal P}=(r_1,\cdots,r_{\ell})$ of $m\leq n$, $D^{\ell}(f,{\mathcal P})$ is related to the  
+$A_{r_1,\cdots,r_{\ell}}$ multigerms.
+<br/>
+<br/>
+Steps to use the Singular library (<a href="https://drive.google.com/open?id=1kp4IY-NZQ-s6llUUY1ee91qqEw0z8cJZ">idealsource.lib</a>) to obtain the  definition ideal of these $r$-stable types $D^{\ell}(f,{\mathcal P})$ of $f$.
+
+
+<br/>
+<br/>
+In SINGULAR environment:
+<br/>
+
+1. LIB "idealsource.lib'';
+<br/>
+"idealsource" works with a ring of parameters, but with unfolding can be faster.
+<br/>
+	<br/>
+If $f(x,y)=(x,y^4+xy)$ and $f_u(x,y)=(x,y^4+xy+uy^2)$ and partition $=$ [1,1], use:
+<br/>
+	<br/>
+2. > ring r=(0,u),(x,y),dp; //With parameters
+<br/>
+   > idealsource([x,y4+xy+uy2],[1,1]);
+<br/>
+> ring r=0,(u,x,y),ds; //As unfolding
+<br/>
+> idealsource([u,x,y4+xy+uy2],[1,1]);"
+
+<br/>
+<br/>
+
+[1.] Marar, W. L., Montaldi, J. A. and Ruas, M. A. S., Multiplicities of zero-schems in quasihomogeneous corank-1 singularities,
+Singularity Theory (Liverpool, 1996), 353-367, London Math. Soc. Lecture Note Ser., 263, Camb. Univ. Press, Cambridge, (1999).
+<br/>
+[2.] Jorge Pérez, V. H., Levcovitz, D. and Saia, M. J., Invariants, equisingularity and Euler obstruction of map germs from ${\mathbb C}^n$ to
+${\mathbb C}^n$,  Journal fur die Reine und Angewandte Mathematik, Crelle´s Journal, 587, 145--167, (2005).
+<br/>
+[3.] Miranda, A. J., Os tipos estáveis e multiplicidades de germes quase homogêneos de ${\mathbb C}^n$ em ${\mathbb C}^n$,
+<a href="http://www.teses.usp.br/teses/disponiveis/55/55135/tde-02022005-153135/">Dissertação de Mestrado</a> - Biblioteca Digital USP.
+
+<br/>
+<br/>
+
+</p>
+</body>
+</html>
