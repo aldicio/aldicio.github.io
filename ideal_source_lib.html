@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ideal Source</title>
     <link rel ="stylesheet" type="text/css" href="style2.css">
+     <!-- INICIO SCRIPT LATEX -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript">MathJax.Hub.Config({
+    tex2jax: {inlineMath: [['$','$'],['[m]','[/m]']], displayMath: [['[mm]','[/mm]'],['$$','$$']]},
+    "HTML-CSS": { scale: 100, showMathMenu: false, minScaleAdjust: 100}
+    });</script>
+    <!-- FIM SCRIPT LATEX -->
 </head>
 <body>
 
@@ -204,7 +211,95 @@ option(noredefine);
 
 </textarea>
 Click to downloado the library (<a href="idealsource.lib">idealsource.lib</a>)
+<br>
 
+<br>
+Below the code to use in Maple software.
+
+<br>
+
+<br>
+
+<textarea style="width:100%; height: 800px;; border:none; font-family:monospace; resize:none;" readonly>
+
+with(linalg):with(combinat):
+
+
+idealsource:=proc(g,m,m1,m2)
+local U,r,s,p,nP,y1,y2,v,i,j,k,LL,da,dv,t,H,L,q,nE,T,n,V,A,h;
+global W;
+print(´g´=g);
+print(´m´=m);
+print(Partições = partition(m));
+print(´nº_partição´= numbpart(m));
+y1:=0;
+y2:=0;
+
+for i from 1 to numbpart(m) do
+  v[i]:=decodepart(m, i):  
+    for j from 1 to ArrayNumElems(Array([v[i]])) do
+      for k from 0 to v[i][j] do
+         y1:=y1+1;
+         y2:=y2+1:
+         H[y1]:=z[j,k];
+         t[y2]:=z[j,k+1]=z[j,0];            
+           if k = v[i][j] then  
+              y2:=y2-1;
+            end if;
+      od;
+    od;
+  L[i]:=[seq(H[n], n=1..y1)]:
+  T[i]:=[seq(t[n], n=1..y2)];
+  y2:=0:
+  y1:=0:
+od;
+for q from m1 to m2 do 
+  LL:=L[q];
+  s:=0;
+  print(Partição[q]= decodepart(m, q));
+    for n from 2 to nops(LL) do
+      V:=vandermonde(LL):
+        dv:=factor(det(V)): 
+        for i from 1 to nops(LL) do  
+             V[i,n]:=subs(z=V[i,2],g):
+                         od:
+         A:=convert(V,matrix):
+                            da:=factor(det(A)):
+                    s:=s+1;
+        U[n-1]:=simplify(subs(T[q],simplify(da/dv))):
+        print(h[s]=U[n-1]);
+        W[s]:=U[n-1]:
+      od:
+  od:
+end:
+
+</textarea>
+
+<br>
+
+
+<br>
+In the:   proc(g,m,m1,m2),  g is the last coordinate of $f(x_1,\cdots, x_{n-1}, z)=(x_1,\cdots, x_{n-1}, g(x_1,\cdots, x_{n-1},z))$, 
+$m$ is an integer $<= n$ (dimension of source), $m_1$ and $m_2$ are the indexes of the partitions of $m$ to be considered (from $1$ to numbpart($m$)).
+
+<br>
+<br>
+
+> idealsource([x,y,z^6+y*z+x*z^2],[2,1,1]); 
+
+
+$$h[1]=
+6 z_{1,0}^{4} z_{2,0}+12 z_{1,0}^{3} z_{2,0}^{2}+12 z_{1,0}^{2} z_{2,0}^{3}+6 z_{1,0} z_{2,0}^{4}+u y +x^{2}+y^{2}+t$$
+
+
+$$h[2]=-3 z_{1,0}^{4}-12 z_{1,0}^{3} z_{2,0}-15 z_{1,0}^{2} z_{2,0}^{2}-12 z_{1,0} z_{2,0}^{3}-3 z_{2,0}^{4}+y$$
+
+
+
+$$h[3] = 4 z_{1,0}^{3}+6 z_{1,0}^{2} z_{2,0}+6 z_{1,0} z_{2,0}^{2}+4 z_{2,0}^{3}$$
+<br>
+
+In this example, the germ is $f(x,y,z)=(x,y,z^6+yz+xz^2)$, $f:({\mathbb C}^3,0) \to ({\mathbb C}^3,0)$ and the partition $P=[1,1]$ of $m=2 < 3 = n$.
 
 </body>
 </html>
