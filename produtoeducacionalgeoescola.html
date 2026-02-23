@@ -96,9 +96,8 @@
                 <td class="solid-name">Prisma Regular</td>
                 <td class="params-list">
                     <ul>
-                        <li>Número de lados da base</li>
-                        <li>Modo de cálculo (Raio ou Aresta)</li>
-                        <li>Medida da base</li>
+                        <li>Número de arestas da base</li>
+                        <li>Medida da base: Raio Circunscrito ou medida da aresta</li>
                         <li>Altura do prisma</li>
                     </ul>
                 </td>
@@ -116,11 +115,11 @@
                 <td class="image-cell"><img src="images/geoescola_figuras/paralelepipedo.png" alt="Paralelepípedo"></td>
             </tr>
             <tr>
-                <td class="solid-name">Pirâmide Regular</td>
+                <td class="solid-name">Pirâmide por Transição</td>
                 <td class="params-list">
                     <ul>
-                        <li>Número de lados da base</li>
-                        <li>Raio da base</li>
+                        <li>Número de lados da base regular</li>
+                        <li>Medida da base: Raio Circunscrito ou medida da aresta</li>
                         <li>Altura da pirâmide</li>
                     </ul>
                 </td>
@@ -171,7 +170,7 @@
                         <li>Raio interno do topo</li>
                         <li>Altura interna</li>
                         <li>Espessura (Distância entre paredes)</li>
-                        <li>Ângulo de abertura</li>
+                        <li>Ângulo de abertura (0° a 360°)</li>
                     </ul>
                 </td>
                 <td class="image-cell"><img src="images/geoescola_figuras/cascatroncocone.png" alt="Casca de Tronco de Cone"></td>
@@ -181,9 +180,9 @@
                 <td class="params-list">
                     <ul>
                         <li>Raio interno</li>
-                        <li>Altura interna</li>
-                        <li>Espessura da parede</li>
-                        <li>Ângulo de abertura</li>
+                        <li>Altura</li>
+                        <li>Espessura (Distância entre paredes)</li>
+                        <li>Ângulo de abertura (0° a 360°)</li>
                     </ul>
                 </td>
                 <td class="image-cell"><img src="images/geoescola_figuras/cascacilindro.png" alt="Casca de Cilindro"></td>
@@ -193,7 +192,8 @@
                 <td class="params-list">
                     <ul>
                         <li>Raio interno</li>
-                        <li>Espessura da parede</li>
+                        <li>Espessura (Distância entre paredes)</li>
+                        <li>Ângulo de abertura (0° a 360°)</li>
                     </ul>
                 </td>
                 <td class="image-cell"><img src="images/geoescola_figuras/cascaesferica.png" alt="Casca Esférica"></td>
@@ -203,7 +203,7 @@
 </section>
 
 <section>
-    <h2>3. Cascas Prismáticas e Especiais</h2>
+    <h2>3. Cascas Prismáticas</h2>
     <table>
         <thead>
             <tr>
@@ -217,19 +217,19 @@
                 <td class="solid-name">Casca de Prisma Regular</td>
                 <td class="params-list">
                     <ul>
-                        <li>Número de lados</li>
-                        <li>Medida da base</li>
-                        <li>Altura total</li>
+                        <li>Número de arestas da base</li>
+                        <li>Medida da base: Raio Circunscrito ou medida da aresta</li>
+                        <li>Altura</li>
                         <li>Espessura (Parede, Base e Tampa)</li>
                     </ul>
                 </td>
-                <td class="image-cell"><img src="images/geoescola_figuras/cascaprisma.png" alt="Casca de Prisma"></td>
+                <td class="image-cell"><img src="images/geoescola_figuras/cascaprismaregular.png" alt="Casca de Prisma"></td>
             </tr>
             <tr>
                 <td class="solid-name">Casca de Paralelepípedo</td>
                 <td class="params-list">
                     <ul>
-                        <li>Largura, Comprimento e Altura</li>
+                        <li>Largura (X), Comprimento (Y) e Altura (Z)</li>
                         <li>Espessura das paredes</li>
                         <li>Espessura do fundo e da tampa</li>
                     </ul>
@@ -240,8 +240,35 @@
     </table>
 </section>
 
+<section>
+    <h2>4. Especiais</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Nome do Sólido</th>
+                <th>Parâmetros (Propriedades)</th>
+                <th>Representação</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="solid-name">Anticlepsidra</td>
+                <td class="params-list">
+                    <ul>
+                        <li>Raio interno</li>
+                        <li>Espessura da parede</li>
+                        <li>Espessura da tampa</li>
+                        <li>Espessura do fundo</li>
+                    </ul>
+                </td>
+                <td class="image-cell"><img src="images/geoescola_figuras/anticlepsidra.png" alt="Casca de Prisma"></td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
 <footer>
-    <p>&copy; 2026 GeoEscola - Projeto de Mestrado PROFMAT-UFU. Desenvolvido por Aldicio José Miranda.</p>
+    <p>&copy; 2026 GeoEscola - Projeto de Mestrado PROFMAT-UFU. Desenvolvido por Marcelo M. Ferreira e Aldicio J. Miranda.</p>
 </footer>
 
 </body>
