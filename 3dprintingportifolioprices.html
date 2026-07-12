@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Printing Portfolio</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <style>
+        /* Paleta de Cores Cinza Escuro (Dark Mode) */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 10px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #888888;
+            margin-bottom: 50px;
+            font-size: 1.4rem;
+        }
+        
+        /* Grid estrito de 3 colunas */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 35px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Cartão no estilo Dark Minimalista */
+        .card {
+            background: #1e1e1e;
+            border: 1px solid #2d2d2d;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #444444;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+                
+        /* Área reservada para a Imagem */
+        .card-image {
+            width: 100%;
+            height: 330px;
+            background-color: #2a2a2a;
+            
+            /* COMANDOS DE AJUSTE AUTOMÁTICO: */
+            background-size: contain; /* Encaixa a imagem inteira sem cortar */
+            background-repeat: no-repeat; /* Evita que a imagem vire um mosaico */
+            background-position: center; /* Centraliza a imagem no quadro */
+            
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #555555;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;    
+        }
+
+        .card-image::before {
+            content: 'No Image Yet';
+            position: absolute;
+            opacity: 0.4;
+        }
+        
+        .card-content {
+            padding: 24px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .piece-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 0 0 8px 0;
+            color: #ffffff;
+        }
+
+        .piece-description {
+            font-size: 1.0rem;
+            color: #aaaaaa;
+            margin: 0 0 20px 0;
+            line-height: 1.5;
+            flex-grow: 1; /* Empurra os preços para o fundo do cartão */
+        }
+        
+        /* Contêiner de Preços */
+
+        /* Contêiner de Preços */
+        .piece-prices {
+            background: #161616;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            border: 1px solid #252525;
+        }
+        .piece-prices p {
+            margin: 2px 0;
+            padding: 4px 8px; /* Espaço para o fundo cinza não "esmagar" o texto */
+            display: flex;
+            justify-content: space-between;
+            border-radius: 4px; /* Bordas levemente arredondadas no destaque */
+        }
+        
+        /* Nova classe para o fundo da linha em Real */
+        .destaque-real {
+            background-color: #252424; /* Tom de cinza leve que combina com o modo escuro */
+        }
+
+        .price-currency {
+            color: #23e45d;
+        }
+
+        /* Responsividade */
+        @media (max-width: 1024px) {
+            .portfolio-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 700px) {
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+            body {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Prof. Aldicio - 3D Printing Portfolio</h1>
+    <div class="subtitle">Mathematical Surfaces & Geometric Models</div>
+    
+    <div class="portfolio-grid" id="grid">
+        </div>
+
+    <script>
+        // COLOQUE AQUI O LINK CSV GERADO NA SUA PLANILHA:
+        const linkPlanilhaCSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTzxuNX-qu_jD1Zs4syvzqs5afH1ZNc0mea8g8TJrjn_DB9GHlsAQ3eDNlwx96vvV0_FpOST3kAmiH2/pub?output=csv';
+
+        function loadPortfolio() {
+            if (!linkPlanilhaCSV || linkPlanilhaCSV === 'COLE_O_LINK_AQUI') {
+                console.warn("Por favor, insira o link da sua planilha CSV na variável linkPlanilhaCSV.");
+                return;
+            }
+
+            Papa.parse(linkPlanilhaCSV, {
+                download: true,
+                header: true,
+                complete: function(results) {
+                    renderGrid(results.data);
+                },
+                error: function(error) {
+                    console.error("Erro ao carregar os dados:", error);
+                }
+            });
+        }
+
+        function renderGrid(data) {
+            const grid = document.getElementById('grid');
+            grid.innerHTML = ''; 
+            
+            data.forEach(item => {
+                // Ignora linhas vazias
+                if (!item['Nome da Peça']) return;
+
+                const card = document.createElement('div');
+                card.className = 'card';
+
+                const urlImagem = item['URL da Imagem'] ? `background-image: url('${item['URL da Imagem']}'); font-size: 0;` : '';
+                const descricao = item['Descrição'] || 'No description provided.';
+
+                card.innerHTML = `
+                    <div class="card-image" style="${urlImagem}"></div>
+                    <div class="card-content">
+                        <h2 class="piece-name">${item['Nome da Peça']}</h2>
+                        <p class="piece-description">${descricao}</p>
+                        
+                        <div class="piece-prices">
+                            <p class="destaque-real"><span class="price-currency">R$</span> <span class="price-value">${item['Valor (R$)'] || '0.00'}</span></p>
+                            <p><span class="price-currency">$</span> <span class="price-value">${item['Valor ($)'] || '0.00'}</span></p>
+                            <p><span class="price-currency">€</span> <span class="price-value">${item['Valor (€)'] || '0.00'}</span></p>
+                        </div>
+
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        loadPortfolio();
+    </script>
+</body>
+</html>
