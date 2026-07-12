@@ -25,7 +25,7 @@
             text-align: center;
             color: #888888;
             margin-bottom: 50px;
-            font-size: 1.1rem;
+            font-size: 1.4rem;
         }
         
         /* Grid estrito de 3 colunas */
@@ -54,9 +54,9 @@
         }
         
         /* Área reservada para a Imagem */
-        .card-image {
+        /*.card-image {
             width: 100%;
-            height: 280px;
+            height: 380px;
             background-color: #2a2a2a;
             background-size: cover;
             background-position: center;
@@ -68,8 +68,29 @@
             font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-        }
+        }*/
         
+        /* Área reservada para a Imagem */
+        .card-image {
+            width: 100%;
+            height: 280px;
+            background-color: #2a2a2a;
+            
+            /* COMANDOS DE AJUSTE AUTOMÁTICO: */
+            background-size: contain; /* Encaixa a imagem inteira sem cortar */
+            background-repeat: no-repeat; /* Evita que a imagem vire um mosaico */
+            background-position: center; /* Centraliza a imagem no quadro */
+            
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #555555;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;    
+        }
+
         .card-image::before {
             content: 'No Image Yet';
             position: absolute;
@@ -137,7 +158,7 @@
 </head>
 <body>
 
-    <h1>3D Printing Portfolio</h1>
+    <h1>Prof. Aldicio - 3D Printing Portfolio</h1>
     <div class="subtitle">Mathematical Surfaces & Geometric Models</div>
     
     <div class="portfolio-grid" id="grid">
